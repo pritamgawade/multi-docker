@@ -21,3 +21,15 @@ after_success:
   - docker push pritamgawade/multi-server
   - docker push pritamgawade/multi-nginx
   - docker push pritamgawade/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: multi-docker
+  env: MultiDocker-env
+  bucker_name: elasticbeanstalk-us-east-1-931182138746
+  bucket_path: docker-multi
+  on:
+    branch:master
+  access_ket_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
