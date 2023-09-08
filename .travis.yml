@@ -9,7 +9,15 @@ script:
   - docker run pritamgawade/react-test npm test -- --coverage
 
 after_success:
-  docker build -t pritamgawade/multi-client ./client
-  docker build -t pritamgawade/multi-nginx ./nginx
-  docker build -t pritamgawade/multi-server ./server
-  docker build -t pritamgawade/multi-worker ./worker
+  - docker build -t pritamgawade/multi-client ./client
+  - docker build -t pritamgawade/multi-nginx ./nginx
+  - docker build -t pritamgawade/multi-server ./server
+  - docker build -t pritamgawade/multi-worker ./worker
+
+  # log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # take those images and push them to docker hub
+  - docker push pritamgawade/multi-client
+  - docker push pritamgawade/multi-server
+  - docker push pritamgawade/multi-nginx
+  - docker push pritamgawade/multi-worker
